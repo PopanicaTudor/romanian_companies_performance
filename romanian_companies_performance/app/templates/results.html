@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="mb-4">Rezultate pentru <strong>{{ company_data.Name }}</strong></h2>
+
+<!-- Mesaj de succes -->
+<div id="success-message" style="display: none;" class="alert alert-success alert-dismissible fade show" role="alert">
+    Descărcarea raportului a început!
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <h4>Informații companie</h4>
+        <table class="table table-bordered table-hover table-striped">
+            <tbody>
+                <tr>
+                    <th>CUI</th>
+                    <td>{{ company_data.CUI if company_data else 'N/A' }}</td>
+                </tr>
+                <tr>
+                    <th>Cifra de afaceri</th>
+                    <td>{{ company_data.Turnover if company_data else 'N/A' }}</td>
+                </tr>
+                <tr>
+                    <th>Profit an curent</th>
+                    <td>{{ company_data.Profit if company_data else 'N/A' }}</td>
+                </tr>
+                <tr>
+                    <th>Profit prezis an viitor</th>
+                    <td>{{ predicted_profit if predicted_profit else 'N/A' }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <h4>Grafic comparație</h4>
+        {% if chart_path %}
+            <img src="{{ url_for('static', filename='comparison_chart.png') }}" alt="Grafic comparație" class="img-fluid">
+        {% else %}
+            <p class="text-danger">Graficul nu a fost disponibil.</p>
+        {% endif %}
+    </div>
+</div>
+
+<div class="mt-4">
+    <a href="{{ url_for('main.download_report', company_name=company_data.Name) }}" class="btn btn-success">Descarcă Raport PDF</a>
+    <a href="/" class="btn btn-secondary">Înapoi</a>
+</div>
+
+<script>
+    document.querySelector('.btn-success').addEventListener('click', function () {
+        const successMessage = document.getElementById('success-message');
+        successMessage.style.display = 'block'; // Afișează mesajul
+    });
+</script>
+{% endblock %}

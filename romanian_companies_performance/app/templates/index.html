@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Afișare alertă dacă există un mesaj de eroare -->
+{% if error_message %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ error_message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+
+<div class="text-center">
+    <h1 class="mt-4">Bine ai venit!</h1>
+    <p class="lead">Introdu numele companiei sau codul CUI pentru a începe.</p>
+    <form method="POST" action="/scan" class="d-flex justify-content-center mt-4">
+        <div class="form-group">
+            <input type="text" name="company_name_or_id" class="form-control" placeholder="Nume companie sau CUI" required>
+        </div>
+        <button type="submit" class="btn btn-primary ms-2">Caută</button>
+    </form>
+</div>
+{% endblock %}
